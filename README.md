@@ -1,2 +1,26 @@
 # Qwen3_finetune
-Qwen3微调
+环境准备
+Unsloth
+vLLM
+EvalScope
+wandb
+一、模型下载
+通过魔搭社区下载 Qwen3-unsloth-bnb-4bit模型
+<img width="819" height="406" alt="image" src="https://github.com/user-attachments/assets/c44eca74-5d4c-4b98-a8a5-e807d005dfdc" />
+二、模型简单调用
+使用vLLM对下载好的模型进行简单调用
+vllm serve ./Qwen3-32B-unsloth-bnb-4bit --enable-auto-tool-choice --tool-call-parser hermes --gpu-memory-utilization 0.7
+根据gpu显存大小自定义选择gpu内存利用率，这里以英伟达A800显卡为例
+三、模型评估
+使用EvalScope对模型进行压力测试
+evalscope perf --url "http://127.0.0.1:8000/v1/chat/completions" --parallel 5 --model ./Qwen3-32B-unsloth-bnb-4bit --number 20 --api openai --dataset openqa --stream
+![Uploading image.png…]()
+通过运行文件对模型进行压力测试
+
+
+四、微调数据集准备
+本项目选择使用OpenMathReasoning和FineTome-100k数据集作为微调数据集
+![Uploading image.png…]()
+![Uploading image.png…]()
+
+通过运行文件对数据集进行清洗融合
