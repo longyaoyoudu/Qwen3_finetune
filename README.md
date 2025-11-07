@@ -1,33 +1,39 @@
 # Qwen3_finetune
-环境准备
+# 环境准备
+```python
 Unsloth
 vLLM
 EvalScope
 wandb
-一、模型下载
+```
+# 一、模型下载
 通过魔搭社区下载 Qwen3-unsloth-bnb-4bit模型
 <img width="819" height="406" alt="image" src="https://github.com/user-attachments/assets/c44eca74-5d4c-4b98-a8a5-e807d005dfdc" />
-二、模型简单调用
+# 二、模型简单调用
 使用vLLM对下载好的模型进行简单调用
+```bash
 vllm serve ./Qwen3-32B-unsloth-bnb-4bit --enable-auto-tool-choice --tool-call-parser hermes --gpu-memory-utilization 0.7
+```
 <img width="866" height="417" alt="image" src="https://github.com/user-attachments/assets/bd2a8d5a-5377-47d6-8d3e-d240b3987767" />
 根据gpu显存大小自定义选择gpu内存利用率，这里以英伟达A800显卡为例
 <img width="1226" height="188" alt="image" src="https://github.com/user-attachments/assets/e89bf9ae-af65-4726-bede-9d90d9aa6d4c" />
-三、模型评估
+# 三、模型评估
 使用EvalScope对模型进行压力测试
+```bash
 evalscope perf --url "http://127.0.0.1:8000/v1/chat/completions" --parallel 5 --model ./Qwen3-32B-unsloth-bnb-4bit --number 20 --api openai --dataset openqa --stream
+```
 <img width="998" height="302" alt="image" src="https://github.com/user-attachments/assets/ec2c177f-25b4-419e-98fa-cef7a9451a24" />
 通过运行文件test_eval.py对模型进行压力测试
-四、微调数据集准备
+# 四、微调数据集准备
 本项目选择使用OpenMathReasoning和FineTome-100k数据集作为微调数据集
 <img width="985" height="517" alt="image" src="https://github.com/user-attachments/assets/dd9ccae5-2afe-4bcc-a5ea-f506944bac3a" />
 <img width="978" height="554" alt="image" src="https://github.com/user-attachments/assets/d6c77768-9358-474d-bb18-107b612b9acd" />
 通过运行文件data_clean.py对数据集进行清洗融合
-五、Qwen微调流程
-1.LoRA参数注入
+# 五、Qwen微调流程
+## 1.LoRA参数注入
 <img width="614" height="305" alt="image" src="https://github.com/user-attachments/assets/8793ece0-14ea-49ce-89d2-764ac613becd" />
-2.设置微调参数
+## 2.设置微调参数
 <img width="599" height="445" alt="image" src="https://github.com/user-attachments/assets/48f28cde-bde9-43aa-8e95-9392ad267db7" />
 其中SFTTrainer是一个专门为指令微调设计的训练器，封装了Hugging Face的Trainer，而SFTConfig配置训练参数的专用类，功能类似TrainingArguments。
-3.进行微调
+## 3.进行微调
 运行文件qwen_lora.py来进行微调
