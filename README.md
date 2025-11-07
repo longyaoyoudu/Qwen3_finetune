@@ -17,13 +17,13 @@ vllm serve ./Qwen3-32B-unsloth-bnb-4bit --enable-auto-tool-choice --tool-call-pa
 使用EvalScope对模型进行压力测试
 evalscope perf --url "http://127.0.0.1:8000/v1/chat/completions" --parallel 5 --model ./Qwen3-32B-unsloth-bnb-4bit --number 20 --api openai --dataset openqa --stream
 <img width="998" height="302" alt="image" src="https://github.com/user-attachments/assets/ec2c177f-25b4-419e-98fa-cef7a9451a24" />
-通过运行文件对模型进行压力测试
+通过运行文件test_eval.py对模型进行压力测试
 
 四、微调数据集准备
 本项目选择使用OpenMathReasoning和FineTome-100k数据集作为微调数据集
 <img width="985" height="517" alt="image" src="https://github.com/user-attachments/assets/dd9ccae5-2afe-4bcc-a5ea-f506944bac3a" />
 <img width="978" height="554" alt="image" src="https://github.com/user-attachments/assets/d6c77768-9358-474d-bb18-107b612b9acd" />
-通过运行文件对数据集进行清洗融合
+通过运行文件data_clean.py对数据集进行清洗融合
 
 五、Qwen微调流程
 1.LoRA参数注入
@@ -32,4 +32,4 @@ evalscope perf --url "http://127.0.0.1:8000/v1/chat/completions" --parallel 5 --
 <img width="599" height="445" alt="image" src="https://github.com/user-attachments/assets/48f28cde-bde9-43aa-8e95-9392ad267db7" />
 其中SFTTrainer是一个专门为指令微调设计的训练器，封装了Hugging Face的Trainer，而SFTConfig配置训练参数的专用类，功能类似TrainingArguments。
 3.进行微调
-运行文件来进行微调
+运行文件qwen_lora.py来进行微调
