@@ -18,13 +18,11 @@ vllm serve ./Qwen3-32B-unsloth-bnb-4bit --enable-auto-tool-choice --tool-call-pa
 evalscope perf --url "http://127.0.0.1:8000/v1/chat/completions" --parallel 5 --model ./Qwen3-32B-unsloth-bnb-4bit --number 20 --api openai --dataset openqa --stream
 <img width="998" height="302" alt="image" src="https://github.com/user-attachments/assets/ec2c177f-25b4-419e-98fa-cef7a9451a24" />
 通过运行文件test_eval.py对模型进行压力测试
-
 四、微调数据集准备
 本项目选择使用OpenMathReasoning和FineTome-100k数据集作为微调数据集
 <img width="985" height="517" alt="image" src="https://github.com/user-attachments/assets/dd9ccae5-2afe-4bcc-a5ea-f506944bac3a" />
 <img width="978" height="554" alt="image" src="https://github.com/user-attachments/assets/d6c77768-9358-474d-bb18-107b612b9acd" />
 通过运行文件data_clean.py对数据集进行清洗融合
-
 五、Qwen微调流程
 1.LoRA参数注入
 <img width="614" height="305" alt="image" src="https://github.com/user-attachments/assets/8793ece0-14ea-49ce-89d2-764ac613becd" />
